@@ -1,16 +1,18 @@
 'use strict';
 
 const restartBtn = document.querySelector('.again');
+const body = document.querySelector('body');
 const inputNumber = document.querySelector('.number-input');
 const checkerBtn = document.querySelector('.check');
 const takeScore = document.querySelector('.label-score');
-const highScore = document.querySelector('.label-highscore');
+const highScore = document.querySelector('.highscore');
 const textMessage = document.querySelector('.guess-message');
 const riddleNumber = 12;
 let startNumber = 20;
+let sum;
 
 restartBtn.addEventListener('click', () => {
-  document.querySelector('body').innerHTML = `
+  body.innerHTML = `
    <header>
       <h1>Угадай Число!</h1>
       <p class="between">(Между 1 и 20)</p>
@@ -30,17 +32,19 @@ restartBtn.addEventListener('click', () => {
         </p>
       </section>
     </main>`;
+
+  body.style.backgroundColor = 'rgb(0, 0, 0)';
 });
 
 const minesNumber = () => {
-  takeScore.innerHTML = `Очки: <span class="score">${(startNumber -= 1)}</span>`;
+  takeScore.innerHTML = `Очки: <span class="score">${(sum =
+    --startNumber)}</span>`;
 };
 
 checkerBtn.addEventListener('click', () => {
   const inputValue = {
     number: inputNumber.value,
   };
-  let sum;
 
   if (inputValue.number > riddleNumber) {
     textMessage.textContent = 'Забагато';
@@ -52,8 +56,10 @@ checkerBtn.addEventListener('click', () => {
     document.querySelector(
       '.question'
     ).innerHTML = `<div class="question">${inputValue.number}</div>`;
-    takeScore.innerHTML = `Очки: <span class="score">${(startNumber += 1)}</span>`;
+    takeScore.innerHTML = `Очки: <span class="score">${(sum =
+      --startNumber)}</span>`;
     highScore.innerHTML = `<span class="highscore">${sum}</span>`;
     textMessage.textContent = 'Правильно';
+    body.style.backgroundColor = 'rgb(9, 250, 21)';
   }
 });
