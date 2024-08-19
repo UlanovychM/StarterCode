@@ -7,9 +7,9 @@ const checkerBtn = document.querySelector('.check');
 const takeScore = document.querySelector('.label-score');
 const highScore = document.querySelector('.highscore');
 const textMessage = document.querySelector('.guess-message');
-const riddleNumber = 12;
+const riddleNumber = Math.floor(Math.random() * (20 - 1) + 1);
 let startNumber = 20;
-let sum;
+let sum = 1;
 
 restartBtn.addEventListener('click', () => {
   body.innerHTML = `
@@ -43,23 +43,24 @@ const minesNumber = () => {
 
 checkerBtn.addEventListener('click', () => {
   const inputValue = {
-    number: inputNumber.value,
+    number: +inputNumber.value,
   };
-
-  if (inputValue.number > riddleNumber) {
-    textMessage.textContent = 'Забагато';
-    minesNumber();
-  } else if (inputValue.number < riddleNumber) {
-    textMessage.textContent = 'Замало';
-    minesNumber();
-  } else if (inputValue.number == riddleNumber) {
-    document.querySelector(
-      '.question'
-    ).innerHTML = `<div class="question">${inputValue.number}</div>`;
-    takeScore.innerHTML = `Очки: <span class="score">${(sum =
-      --startNumber)}</span>`;
-    highScore.innerHTML = `<span class="highscore">${sum}</span>`;
-    textMessage.textContent = 'Правильно';
-    body.style.backgroundColor = 'rgb(9, 250, 21)';
+  if (sum >= 1) {
+    if (inputValue.number > riddleNumber) {
+      textMessage.textContent = 'Забагато';
+      minesNumber();
+    } else if (inputValue.number < riddleNumber) {
+      textMessage.textContent = 'Замало';
+      minesNumber();
+    } else if (inputValue.number == riddleNumber) {
+      document.querySelector(
+        '.question'
+      ).innerHTML = `<div class="question">${inputValue.number}</div>`;
+      takeScore.innerHTML = `Очки: <span class="score">${(sum =
+        --startNumber)}</span>`;
+      highScore.innerHTML = `<span class="highscore">${sum}</span>`;
+      textMessage.textContent = 'Правильно';
+      body.style.backgroundColor = 'rgb(9, 250, 21)';
+    }
   }
 });
